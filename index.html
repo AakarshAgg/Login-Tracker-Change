@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="Verification.css">
+</head>
+
+<body>
+  <div class="section">
+    <form action="">
+      <h1>Login Change Tracker</h1>
+      <input type="text" id="clientid" placeholder="ClientID" name="clientid" autocomplete="clientid">
+      <input type="email" id="email" placeholder="Email" name="email" autocomplete="email">
+      <input type="email" id="username" placeholder="Username" name="username" autocomplete="username">
+      <button type="submit" id="submit"> Submit</button>
+    </form>
+  </div>
+
+  <div class="outer">
+    <button class="btn" onclick="copyContent()">Copy!</button>
+  <div id="details">
+
+  </div>
+  
+</div>
+
+</body>
+<script>
+  const formSubmit = document.getElementById("submit")
+  const Details=document.getElementById("details")
+
+  formSubmit.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const Email = document.getElementById("email").value
+    const UserName= document.getElementById("username").value
+    const ClientID=document.getElementById("clientid").value
+    const userData = {
+      email: Email,
+      username: UserName
+    }
+
+    loginUser(userData,ClientID,Details)
+  })
+
+
+
+  const loginUser = async (uservalue,clientvalue,Detailvalue) => {
+    try {
+
+      const resp = await fetch(`https://${clientvalue}.bobot.in/chat/agents/migrate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(uservalue)
+      })
+
+      const data = await resp.json();
+      console.log(data)
+      Detailvalue.innerHTML = JSON.stringify(data);
+     console.log("DV",Detailvalue.innerHTML)
+    
+     if (data) {
+      //alert(`${data.message}`)
+      alert("verification Successful")
+      
+     }else{
+       alert("verification not Successful")
+     }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+
+  async function copyContent(){
+    //console.log("detai",Details.innerHTML)
+            try {
+              await navigator.clipboard.writeText(Details.innerHTML);
+              console.log('Content copied to clipboard');
+            } catch (err) {
+              console.error('Failed to copy: ', err);
+            }
+          }
+
+
+
+</script>
+
+</html>
