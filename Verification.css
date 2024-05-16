@@ -29,8 +29,21 @@ body {
     border-radius: 30px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+#details{
+    text-align: center;
+    padding: 10px;
+}
 .outer{
     margin-left: 30px;
+    border: 1px solid black;
+    height: 63vh;
+    width: 35vw;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.outer>.btn{
+    text-align: center;
 }
 
 input {

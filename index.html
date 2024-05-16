@@ -12,8 +12,8 @@
   <div class="section">
     <form action="">
       <h1>Login Change Tracker</h1>
-      <input type="text" id="clientid" placeholder="ClientID" name="clientid" autocomplete="clientid">
-      <input type="email" id="email" placeholder="Email" name="email" autocomplete="email">
+      <input type="text" id="clientid" placeholder="ClientID" name="clientid" autocomplete="clientid" >
+      <input type="email" id="email" placeholder="Email" name="email" autocomplete="email" >
       <input type="email" id="username" placeholder="Username" name="username" autocomplete="username">
       <button type="submit" id="submit"> Submit</button>
     </form>
@@ -38,13 +38,17 @@
     const Email = document.getElementById("email").value
     const UserName= document.getElementById("username").value
     const ClientID=document.getElementById("clientid").value
+
+    if(!Email || !UserName || !ClientID){
+      alert("Please fill all the fields")
+    }else{
     const userData = {
       email: Email,
       username: UserName
     }
 
     loginUser(userData,ClientID,Details)
-  })
+  }})
 
 
 
@@ -57,19 +61,22 @@
         body: JSON.stringify(uservalue)
       })
 
+      console.log("resp",resp)
       const data = await resp.json();
-      console.log(data)
-      Detailvalue.innerHTML = JSON.stringify(data);
-     console.log("DV",Detailvalue.innerHTML)
+      console.log("data",data)
+      
+     //console.log("DV",Detailvalue.innerHTML)
     
      if (data) {
       //alert(`${data.message}`)
       alert("verification Successful")
-      
+      Detailvalue.innerHTML = JSON.stringify(data);
      }else{
        alert("verification not Successful")
      }
     } catch (error) {
+      Detailvalue.innerHTML ="You've reached an empty instance portal, adventurer";
+      alert(`${error.message}`)
       console.log(error.message)
     }
   }
@@ -79,6 +86,7 @@
     //console.log("detai",Details.innerHTML)
             try {
               await navigator.clipboard.writeText(Details.innerHTML);
+              alert('Content copied to clipboard')
               console.log('Content copied to clipboard');
             } catch (err) {
               console.error('Failed to copy: ', err);
